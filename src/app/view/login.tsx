@@ -3,27 +3,35 @@ import ReactDOM from 'react-dom';
 import '../assets/css/login.css';
 import auth from "../api/auth";
 import { toast } from 'react-toastify';
+import { useNavigate, useNavigation } from 'react-router-dom';
 
 export default function Login() {
+
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
     const submit = async (e: any) => {
         e.preventDefault();
-
-        const result = await auth.login(email, password);
+        
+        const result:any = await auth.login(email, password);
         if (result.status) {
+            document.cookie = `Bearer ${result.token}`;
             toast.success(result.message, {
                 className: 'toast-success',
                 theme: 'colored',
-                position: 'bottom-center',
+                position: 'top-center',
             });
+            setTimeout(() => {
+                navigate('/index');
+            }, 3000)
         } else {
+            document.cookie = 'null';
             toast.error(`${result.message}`, {
                 className: 'toast-danger',
                 theme: 'colored',
-                position: 'bottom-center',
+                position: 'top-center',
 
             });
         }
@@ -31,11 +39,12 @@ export default function Login() {
 
     return (
         <>
+            <div className='background'></div>
             <div className="main">
                 <form onSubmit={submit}>
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title"><i className="bi bi-eye-fill"></i> integrated systems</h5><hr />
+                            <h5 className="card-title"><i className="bi bi-eye-fill"></i> </h5><hr />
                             <h6 className="card-subtitle mb-4 text-muted">LOGIN</h6>
                             <div className="form-group">
                                 <label >E-mail</label>

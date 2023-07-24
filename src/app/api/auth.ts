@@ -12,7 +12,7 @@ export default new class Auth{
             const result = await axios.post('https://mateus2731.c34.integrator.host/service/api/auth/login', data);
             return result.data;
         }catch(error:any){
-            return error.data;
+            return error.response.data;
         }
 
     }
