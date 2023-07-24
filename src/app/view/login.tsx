@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import '../assets/css/login.css';
 import auth from "../api/auth";
 import { toast } from 'react-toastify';
 
-export default function login() {
+export default function Login() {
 
     const [email, setEmail] = useState<string>("");
-    const [pass, setPass] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
 
-    const submit = async (e:any) => {
+    const submit = async (e: any) => {
         e.preventDefault();
 
-        const result = await auth.login(email, pass);
-        // if(result.status){
-        //     toast.success(result.message, {
-        //         className: 'toast-success',
-        //         theme: 'colored',
-        //         position: 'bottom-center',
-        //     });
-        // }else{
-        //     toast.error(`${result.message}`, {
-        //         className: 'toast-danger',
-        //         theme: 'colored',
-        //         position: 'bottom-center',
-                
-        //     }); 
-        // }
+        const result = await auth.login(email, password);
+        if (result.status) {
+            toast.success(result.message, {
+                className: 'toast-success',
+                theme: 'colored',
+                position: 'bottom-center',
+            });
+        } else {
+            toast.error(`${result.message}`, {
+                className: 'toast-danger',
+                theme: 'colored',
+                position: 'bottom-center',
+
+            });
+        }
     }
 
     return (
@@ -53,8 +54,8 @@ export default function login() {
                                     className="form-control mb-3"
                                     id="password"
                                     placeholder="Password"
-                                    value={pass}
-                                    onChange={(e) => setPass(e.target.value)}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     required
                                 />
                             </div>
