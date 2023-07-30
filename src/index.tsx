@@ -8,6 +8,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import {  HashRouter  } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/js/bootstrap.bundle.js';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

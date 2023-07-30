@@ -20,6 +20,10 @@ html, body{
     left: 30%;
 }
 
+.input-token.error{
+    border: solid 2px red;
+}
+
 @media (max-width: 500px){
     .main{
         width: 90%;
