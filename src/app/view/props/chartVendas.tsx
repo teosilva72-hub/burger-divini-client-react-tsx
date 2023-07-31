@@ -8,10 +8,10 @@ export default function ChartVendas(props: any) {
         <>
             <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="card">
-                    <div className={`card-body`}>
-                        <h5 className="card-title text-center">{props.title} {props.icon}</h5><hr />
+                    <div className={`card-body bg-light`}>
+                        <h5 className="card-title text-center text-dark">{props.title} {props.icon}</h5><hr />
                         <Chart
-                            chartType="Bar"
+                            chartType="Line"
                             data = {[
                                 ["MÊS", "Vendas", "Saídas"],
                                 ["01", 1000, 400],
