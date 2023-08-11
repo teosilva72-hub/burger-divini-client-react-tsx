@@ -11,11 +11,13 @@ export default function CadastrarUser(props: any) {
     const [senha, setSenha] = useState<any>("");
     const [perfil, setPerfil] = useState<any>("");
     const [cep, setCep] = useState<any>();
-    const [numero, setNumero] = useState<any>("");
+    const [numero, setNumero] = useState<any>(null);
     const [logradouro, setLogradouro] = useState<any>("");
     const [cidade, setCidade] = useState<any>("");
     const [uf, setUf] = useState<any>();
     const [bairro, setBairro] = useState<any>("");
+    const [pontoReferencia, setPontoReferencia] = useState<any>("");
+    const [complemento, setComplemento] = useState<any>("");
     const cadastrar = async (value: any) => {
         if (value) $('#rowCadastrar').removeClass('d-none');
         else $('#rowCadastrar').addClass('d-none');
@@ -47,6 +49,43 @@ export default function CadastrarUser(props: any) {
                 position: 'top-center',
             });
             return e;
+        }
+    }
+
+    const saveUser = async () => {
+        try {
+            const data = {
+                name: nome,
+                last_name: sobrenome,
+                email: email,
+                password: senha,
+                perfil: Number(perfil),
+                endereco: {
+                    cep: cep,
+                    numero: numero,
+                    logradouro: `${$('#logradouro').val()}`,
+                    ponto_referencia: `${$('#pontoReferencia').val()}`,
+                    uf: `${$('#uf').val()}`,
+                    complemento: complemento,
+                    cidade: `${$('#cidade').val()}`
+                }
+            }
+            console.log(data)
+            const result: any = await user.registerUser(data);
+            if (result.status) {
+                toast.success(`${result.message}`, {
+                    className: 'toast-danger',
+                    theme: 'colored',
+                    position: 'top-center',
+                });
+            }else throw result.message
+        } catch (error: any) {
+            console.log(error)
+            toast.error(`${error}`, {
+                className: 'toast-danger',
+                theme: 'colored',
+                position: 'top-center',
+            });
         }
     }
 
@@ -83,45 +122,30 @@ export default function CadastrarUser(props: any) {
                     theme: 'colored',
                     position: 'top-center',
                 });
+            } else if (numero == null || numero == undefined) {
+                toast.error(`Número não pode ser igual a vazio!`, {
+                    className: 'toast-danger',
+                    theme: 'colored',
+                    position: 'top-center',
+                });
             } else {
                 try {
                     const cepApi: any = await viacep(cep);
-                    if (cepApi.request.status == 200)
-                    toast.success(`CEP válido!`, {
-                        className: 'toast-danger',
-                        theme: 'colored',
-                        position: 'top-center',
-                    });
-                    else console.log('deu ruim')
-                } catch (error: any) {
-                    toast.error(`CEP inválido!`, {
-                        className: 'toast-danger',
-                        theme: 'colored',
-                        position: 'top-center',
-                    });
-                }
-
-            }
-        } else {
-            try {
-
-
-                const data = {
-                    name: nome,
-                    last_name: sobrenome,
-                    email: email,
-                    password: senha,
-                    endereco: {
-                        cep: cep,
-                        numero: `${$('').val()}`,
-
+                    if (cepApi.request.status == 200){
+                       await saveUser();
                     }
+                } catch (error: any) {
+                    toast.error(`${error}`, {
+                        className: 'toast-danger',
+                        theme: 'colored',
+                        position: 'top-center',
+                    });
                 }
-                const result = user.registerUser({});
-            } catch (error: any) {
-                console.log(error);
+
             }
         }
+
+        
     }
     return (
         <>
@@ -177,9 +201,10 @@ export default function CadastrarUser(props: any) {
                             value={perfil}
                             aria-label="Large select example">
                             <option selected>-------</option>
-                            <option value="1">ADMIN</option>
-                            <option value="2">USER</option>
-                            <option value="3">PROPRIETARIO</option>
+                            <option value={0}>ADMIN</option>
+                            <option value={3}>USER</option>
+                            <option value={1}>PROPRIETARIO</option>
+                            <option value={2}>COLABORADOR</option>
                         </select>
 
                     </div>
@@ -211,7 +236,7 @@ export default function CadastrarUser(props: any) {
                                 <input type="number"
                                     value={cep}
                                     className="form-control mb-3" id="cepInput"
-                                    onClick={()=>setCep(null)}
+                                    onClick={() => setCep(null)}
                                     onBlur={(e: any) => { viacep(e.target.value) }} required />
                             </div>
                             <div className="col-md-6">
@@ -222,26 +247,34 @@ export default function CadastrarUser(props: any) {
                             <div className="col-md-3">
                                 <span>Número</span>
                                 <input type="number" id="numero"
+                                    onBlur={(e: any) => setNumero(e.target.value)}
                                     className="form-control mb-3" required />
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-4">
+                                <span>Complemento</span>
+                                <input type="text" id="complemento"
+                                    onBlur={(e: any) => setComplemento(e.target.value)}
+                                    className="form-control mb-3" required />
+                            </div>
+                            <div className="col-md-5">
                                 <span>Ponto de Referência</span>
                                 <input type="text" id="pontoReferencia"
+                                    onBlur={(e: any) => setPontoReferencia(e.target.value)}
                                     className="form-control mb-3" required />
                             </div>
                             <div className="col-md-6">
                                 <span>Cidade</span>
-                                <input type="text"
+                                <input type="text" onBlur={(e: any) => setCidade(e.target.value)}
                                     className="form-control mb-3" disabled id="cidade" />
                             </div>
-                            <div className="col-md-3">
+                            <div className="col-md-2">
                                 <span>UF</span>
-                                <input type="text"
+                                <input type="text" onBlur={(e: any) => setUf(e.target.value)}
                                     className="form-control mb-3" disabled id="uf" />
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-4">
                                 <span>Bairro</span>
-                                <input type="text"
+                                <input type="text" onBlur={(e: any) => setBairro(e.target.value)}
                                     className="form-control mb-3" disabled id="bairro" />
                             </div>
                         </div>
