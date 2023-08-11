@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Login from './app/view/login';
 import RouterPrivate from './routerPrivate';
 import Index from './app/view/index';
+import RegisterUser from './app/view/registerUser';
 
 function App() {
 
@@ -23,8 +24,18 @@ function App() {
             <RouterPrivate.Index user={res}>
               <Index />
             </RouterPrivate.Index>
-          } />
+          }
+        />
+        <Route
+          path='/user/register'
+          element={
+            <RouterPrivate.User user={res}>
+              <RegisterUser />
+            </RouterPrivate.User>
+          }
+        />
       </Routes>
+
     </div>
   );
 }

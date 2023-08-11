@@ -1,10 +1,16 @@
 import { Navigate } from "react-router";
 
-const Index = ({ user, children }:any) => {
-    if (!user) {
-      return <Navigate to="/login" replace />;
-    }
-    return children;
+const Index = ({ user, children }: any) => {
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
 };
 
-export default{ Index}
+const User = ({ user, children }: any) => {
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+export default { Index, User }
