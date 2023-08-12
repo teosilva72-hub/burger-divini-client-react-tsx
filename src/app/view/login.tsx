@@ -70,7 +70,6 @@ export default function Login() {
     }
 
     const recoveryPass = async (check: boolean) => {
-        console.log(check)
         if (check == true) {
             $('#inputToken').addClass('d-none');
             $('#firstAccess').prop('checked', false);

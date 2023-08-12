@@ -13,4 +13,13 @@ export default new class UserApi{
             return e.response.data;
         }
     }
+
+    async listUser(){
+        try{
+            const result = await axios.get('https://mateus2731.c34.integrator.host/service/api/user/all', config);
+            return result.data;
+        }catch(e:any){ 
+            return e.response.data;
+        }
+    }
 } 

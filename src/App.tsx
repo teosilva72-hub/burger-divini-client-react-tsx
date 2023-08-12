@@ -9,7 +9,6 @@ function App() {
 
   function check() {
     let token: any = document.cookie;
-    console.log(token)
     if (token.trim() == 'null') return false;
     else return true;
   }

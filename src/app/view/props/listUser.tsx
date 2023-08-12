@@ -1,10 +1,48 @@
 import $ from 'jquery';
+import user from '../../api/user';
+import { useState } from "react";
+import { toast } from 'react-toastify';
 
 export default function ListUser(props: any) {
     
     const listar = async(value:any)=>{
-        if(value) $('#tabelaListar').removeClass('d-none');
-        else $('#tabelaListar').addClass('d-none');
+        if(value){
+            await listUser();
+            $('#tabelaListar').removeClass('d-none');
+        }else {
+            $('#tabelaListar').addClass('d-none');
+            $('.columnData').remove()
+        }
+    }
+    
+    const listUser = async()=>{
+        
+        try{
+            const result = await user.listUser();
+            if(result.status){
+                for(let list of result.data){
+                    $('#addTbody').append(`
+                        <tr class='columnData'>
+                            <th scope="row">${list.id}</th>
+                            <td>${list.name}</td>
+                            <td>${list.celular}</td>
+                            <td>${list.perfil}</td>
+                        </tr>
+                    `);
+                }
+                toast.success(`${result.message}`, {
+                    className: 'toast-danger',
+                    theme: 'colored',
+                    position: 'top-center',
+                });
+            }else  throw result.message;
+        }catch(error:any){
+            toast.error(`${error.message}`, {
+                className: 'toast-danger',
+                theme: 'colored',
+                position: 'top-center',
+            });
+        }
     }
     return (
         <>
@@ -21,63 +59,13 @@ export default function ListUser(props: any) {
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Celular</th>
+                                <th scope="col">Perfil</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td >Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td >Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td >Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
+                        <tbody id='addTbody'>
+                            
                         </tbody>
                     </table>
                 </div>

@@ -82,7 +82,6 @@ export default function CadastrarUser(props: any) {
                     cidade: `${$('#cidade').val()}`
                 }
             }
-            console.log(data)
             const result: any = await user.registerUser(data);
             if (result.status) {
                 toast.success(`${result.message}`, {
@@ -92,7 +91,6 @@ export default function CadastrarUser(props: any) {
                 });
             } else throw result.message
         } catch (error: any) {
-            console.log(error)
             toast.error(`${error}`, {
                 className: 'toast-danger',
                 theme: 'colored',
