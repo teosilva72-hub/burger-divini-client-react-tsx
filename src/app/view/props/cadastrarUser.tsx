@@ -18,6 +18,7 @@ export default function CadastrarUser(props: any) {
     const [bairro, setBairro] = useState<any>("");
     const [pontoReferencia, setPontoReferencia] = useState<any>("");
     const [complemento, setComplemento] = useState<any>("");
+    const [telefone, setTelefone] = useState<any>("");
 
     const cadastrar = async (value: any) => {
         if (value) $('#rowCadastrar').removeClass('d-none');
@@ -72,6 +73,7 @@ export default function CadastrarUser(props: any) {
                 email: email,
                 password: senha,
                 perfil: Number(perfil),
+                celular: telefone,
                 endereco: {
                     cep: cep,
                     numero: numero,
@@ -192,11 +194,18 @@ export default function CadastrarUser(props: any) {
                                 value={sobrenome}
                                 className="form-control mb-2" />
                         </div>
-                        <div className="col-md-12 col-sm-12">
+                        <div className="col-md-6 col-sm-6">
                             <span>Email</span>
                             <input type="email"
                                 onChange={(e: any) => setEmail(e.target.value)}
                                 value={email}
+                                className="form-control mb-2" />
+                        </div>
+                        <div className="col-md-6 col-sm-6">
+                            <span>Celular</span>
+                            <input type="number"
+                                onChange={(e: any) => setTelefone(e.target.value)}
+                                value={telefone}
                                 className="form-control mb-2" />
                         </div>
                         <div className="col-md-6 col-sm-12">

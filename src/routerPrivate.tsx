@@ -13,4 +13,11 @@ const User = ({ user, children }: any) => {
   }
   return children;
 };
-export default { Index, User }
+
+const Produto = ({ user, children }: any) => {
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+export default { Index, User, Produto }

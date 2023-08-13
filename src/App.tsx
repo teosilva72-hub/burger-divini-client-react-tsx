@@ -4,6 +4,7 @@ import Login from './app/view/login';
 import RouterPrivate from './routerPrivate';
 import Index from './app/view/index';
 import RegisterUser from './app/view/registerUser';
+import RegisterProduto from './app/view/registerProduto';
 
 function App() {
 
@@ -31,6 +32,14 @@ function App() {
             <RouterPrivate.User user={res}>
               <RegisterUser />
             </RouterPrivate.User>
+          }
+        />
+        <Route
+          path='/user/produto'
+          element={
+            <RouterPrivate.Produto user={res}>
+              <RegisterProduto />
+            </RouterPrivate.Produto>
           }
         />
       </Routes>

@@ -1,42 +1,45 @@
 import $ from 'jquery';
 import user from '../../api/user';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 
 export default function ListUser(props: any) {
-    
-    const listar = async(value:any)=>{
-        if(value){
-            await listUser();
+
+    const [res, setRes] = useState<Array<any>>();
+
+    const listar = async (value: any) => {
+        if (value) {
             $('#tabelaListar').removeClass('d-none');
-        }else {
+            await listUser();
+        } else {
             $('#tabelaListar').addClass('d-none');
             $('.columnData').remove()
         }
     }
-    
-    const listUser = async()=>{
-        
-        try{
+
+    const editUser = async(id: any) => {
+        alert("A FUNCÇÃO DE EDITAR USUÁRIO AINDA NÃO ESTÁ DISPONIVEL!!!");
+
+    }
+    const deleteUser = async(id:any) => {
+        alert("A FUNCÇÃO DE DELETAR USUÁRIO AINDA NÃO ESTÁ DISPONIVEL!!!");
+    }
+
+    const listUser = async () => {
+
+        try {
             const result = await user.listUser();
-            if(result.status){
-                for(let list of result.data){
-                    $('#addTbody').append(`
-                        <tr class='columnData'>
-                            <th scope="row">${list.id}</th>
-                            <td>${list.name}</td>
-                            <td>${list.celular}</td>
-                            <td>${list.perfil}</td>
-                        </tr>
-                    `);
-                }
+            if (result.status) {
                 toast.success(`${result.message}`, {
                     className: 'toast-danger',
                     theme: 'colored',
                     position: 'top-center',
                 });
-            }else  throw result.message;
-        }catch(error:any){
+                console.log(result)
+                await setRes(result.data as any);
+                return result.data
+            } else throw result.message;
+        } catch (error: any) {
             toast.error(`${error.message}`, {
                 className: 'toast-danger',
                 theme: 'colored',
@@ -44,6 +47,7 @@ export default function ListUser(props: any) {
             });
         }
     }
+
     return (
         <>
             <div className="card" id="listar">
@@ -61,11 +65,30 @@ export default function ListUser(props: any) {
                                 <th scope="col">#</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Celular</th>
-                                <th scope="col">Perfil</th>
+                                <th scope="col"><i className="bi bi-gear-fill"></i></th>
                             </tr>
                         </thead>
                         <tbody id='addTbody'>
-                            
+                            {
+                                res?.map((e: any, id: number) => {
+                                    console.log(e)
+                                    return (
+                                        <>
+                                            <tr key={id}>
+                                                <th scope="row">{e.id}</th>
+                                                <td>{e.name}</td>
+                                                <td>{e.celular}</td>
+                                                <td>
+                                                    <div className="btn-group" role="group" aria-label="Basic example">
+                                                        <button type="button" className="btn btn-primary" onClick={(a)=>editUser(e.id)}><i className="bi bi-pencil-fill"></i></button>
+                                                        <button type="button" className="btn btn-danger" onClick={(a)=>deleteUser(e.id)}><i className="bi bi-trash3-fill"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </>
+                                    );
+                                })
+                            }
                         </tbody>
                     </table>
                 </div>
