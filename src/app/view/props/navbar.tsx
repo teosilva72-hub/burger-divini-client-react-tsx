@@ -10,13 +10,10 @@ export default function NavBar(props:any) {
                     <a className="nav-link active" href="#/index"><i className="bi bi-house-door"></i> Início</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#/caixa"><i className="bi bi-cash-coin"></i> Caixa</a>
+                    <a className="nav-link disabled" href="#/caixa"><i className="bi bi-cash-coin"></i> Caixa</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#/produtos"><i className="bi bi-shop-window"></i> Produtos</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link disabled" aria-disabled="true">Disabled</a>
+                    <a className="nav-link" href="#/user/produto"><i className="bi bi-shop-window"></i> Estoque</a>
                 </li>
             </ul>
         </nav>

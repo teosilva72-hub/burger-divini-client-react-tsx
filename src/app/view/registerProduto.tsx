@@ -2,6 +2,11 @@ import Cadastrar from "./props/cadastrarProduto";
 import NavBar from "./props/navbar";
 import '../assets/css/produto.css';
 import ListUser from "./props/listUser";
+import ListProd from "./props/listProdutos";
+import Categoria from "./props/categoriaProdutos";
+import ListCategoria from "./props/listCategoria";
+import Fornecedor from "./props/cadastrarFornecedor";
+import ListFornecedor from "./props/listFornecedor";
 
 export default function RegisterProduto(props: any) {
 
@@ -12,16 +17,34 @@ export default function RegisterProduto(props: any) {
                 <div className="container-fluid">
                     <div className="card">
                         <div className="card-body">
-                            <h1 className="card-title text-center">PRODUTOS</h1><hr />
+                            <h1 className="card-title text-center">ESTOQUE</h1><hr />
                             <div className="row">
                                 <div className="col-md-6 col-sm-12 mb-3">
-                                    <div className="card" id="cadastrar">{/**LADO ESQUERDO */}
+                                    <div className="card mb-3" id="cadastrar">{/**LADO ESQUERDO */}
                                         <Cadastrar />
+                                    </div>
+                                    <div className="card mb-3" id="cadastrar">{/**LADO ESQUERDO */}
+                                        <Categoria />
+                                    </div>
+                                    <div className="card" id="cadastrar">{/**LADO ESQUERDO */}
+                                        <Fornecedor />
                                     </div>
                                 </div>
 
                                 <div className="col-md-6 col-sm-12 mb-3"> {/**LADO DIREITO */}
-                                    <ListUser />
+                                    <div className="row">
+                                        <div className="col-12 mb-3">
+                                            <ListProd />
+                                        </div>
+                                        <div className="col-12 mb-3">
+                                            <ListCategoria />
+                                        </div>
+                                        <div className="col-12 mb-3">
+                                            <ListFornecedor />
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             </div>
                         </div>

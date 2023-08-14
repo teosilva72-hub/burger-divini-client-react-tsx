@@ -1,18 +1,18 @@
 import { toast } from "react-toastify";
-import user from "../../api/user";
-import axios from "axios";
 import { useState } from "react";
 import $ from 'jquery';
+import produto from "../../api/produto";
+import { async } from "q";
 
 export default function Cadastrar(props: any) {
 
-    const [nome, setNome] = useState<any>("");
-    const [marca, setMarca] = useState<any>("");
-    const [descricao, setDescricao] = useState<any>("");
-    const [valor, setValor] = useState<any>("");
-    const [valorVenda, setValorVenda] = useState<any>("");
-    const [unidades, setUnidades] = useState<any>("");
-    const [validade, setValidade] = useState<any>(null);
+    const [nome, setNome] = useState<any>();
+    const [marca, setMarca] = useState<any>();
+    const [descricao, setDescricao] = useState<any>();
+    const [valor, setValor] = useState<any>();
+    const [valorVenda, setValorVenda] = useState<any>();
+    const [unidades, setUnidades] = useState<any>();
+    const [validade, setValidade] = useState<any>();
     const [fornecedor, setFornecedor] = useState<any>();
     const [categoria, setCategoria] = useState<any>();
 
@@ -20,23 +20,37 @@ export default function Cadastrar(props: any) {
         if (value) $('#rowCadastrar').removeClass('d-none');
         else $('#rowCadastrar').addClass('d-none');
     }
-
-    const SaveProduto = async () => {
+    const valideProduto = async () => {
         try {
+            if (nome == undefined || nome.trim() == '') throw 'nome é obrigatório!';
+            else if (marca == undefined || marca.trim() == '') throw 'marca é obrigatório!';
+            else if (descricao == undefined || descricao.trim() == '') throw 'descrição é obrigatório!'
+            else if (valor == undefined || valor == null) throw 'valor é  obrigatório!';
+            else if (unidades == undefined || unidades == null) throw 'unidade é obrigatório!'
+            else return true;
+        } catch (error) {
+            return error;
+        }
+    }
+
+    const SaveProduto = async (e: any) => {
+        try {
+            e.preventDefault()
+            await valideProduto();
             const data = {
                 nome: nome,
                 marca: marca,
                 descricao: descricao,
                 valor: Number(valor),
                 valor_venda: Number(valorVenda),
-                id_fornecedor: fornecedor,
-                id_categoria: categoria,
-                unidades: unidades,
+                id_fornecedor: Number(fornecedor),
+                id_categoria: Number(categoria),
+                unidades: Number(unidades),
                 validade: validade
             };
 
-            const result: any = await user.registerUser(data);
-
+            const result: any = await produto.saveProduto(data);
+            //console.log(result)
             if (result.status) {
                 toast.success(`${result.message}`, {
                     className: 'toast-danger',
@@ -53,12 +67,40 @@ export default function Cadastrar(props: any) {
         }
     }
 
-    
+    (async () => {
+        try {
+            const getCategoria = await produto.getCategoria();
+            const getFornecedor = await produto.getFornecedor();
+            if (getCategoria.status && getCategoria.status){
+                for(let t of getCategoria.data){
+                    $('#categoria').append(
+                        `
+                            <option value="${t.id}">${t.nome}</option>
+                        `
+                    );
+                }
+                for(let t of getFornecedor.data){
+                    $('#fornecedor').append(
+                        `
+                            <option value="${t.id}">${t.nome_fantasia}</option>
+                        `
+                    );
+                }
+            }else throw `${getCategoria.message} && ${getFornecedor.message}`;
+        } catch (e: any) {
+            toast.error(`${e}`, {
+                className: 'toast-danger',
+                theme: 'colored',
+                position: 'top-center',
+            });
+        }
+    })()
+
     return (
         <>
-            <form>
+            <form onSubmit={SaveProduto}>
                 <div className="card-body">
-                    <h5 className="card-title text-center">CADASTRAR</h5><hr />
+                    <h5 className="card-title text-center">PRODUTOS</h5><hr />
                     <div className="form-check">
                         <input className="form-check-input"
                             type="checkbox" value="" id="checkCadastrar"
@@ -83,61 +125,59 @@ export default function Cadastrar(props: any) {
                                 value={marca}
                                 className="form-control mb-2" />
                         </div>
-                        <div className="col-md-6 col-sm-6">
+                        <div className="col-md-12 col-sm-12">
                             <span>Descrição</span>
-                            <input type="email"
+                            <textarea
                                 onChange={(e: any) => setDescricao(e.target.value)}
                                 value={descricao}
                                 className="form-control mb-2" />
                         </div>
-                        <div className="col-md-6 col-sm-6">
+                        <div className="col-md-4 col-sm-4">
                             <span>valor</span>
                             <input type="number"
                                 onChange={(e: any) => setValor(e.target.value)}
                                 value={valor}
                                 className="form-control mb-2" />
                         </div>
-                        <div className="col-md-6 col-sm-12">
+                        <div className="col-md-4 col-sm-4">
                             <span>Valor Venda</span>
                             <input type="number"
                                 onChange={(e: any) => setValorVenda(e.target.value)}
                                 value={valorVenda}
                                 className="form-control mb-2" />
                         </div>
-                        <div className="col-md-6 col-sm-12">
+                        <div className="col-md-4 col-sm-4">
                             <span>Unidades</span>
-                            <input type="password" id="repeatPassword"
+                            <input type="number"
+                                onChange={(e: any) => setUnidades(e.target.value)}
+                                value={unidades}
                                 className="form-control mb-3" />
                         </div>
-                        <div className="col-md-12 col-sm-12">
+                        <div className="col-md-6 col-sm-6">
                             <span>Fornecedor</span>
-                            <select className="form-select form-select-md mb-3"
-                                onChange={(e: any) => setUnidades(e.target.value)}
+                            <select className="form-select form-select-md mb-3" id="fornecedor"
+                                onChange={(e: any) => setFornecedor(e.target.value)}
                                 value={fornecedor}
                                 aria-label="Large select example">
                                 <option selected>-------</option>
-                                <option value={0}>ASSAI</option>
-                                <option value={1}>ATACADÃO</option>
                             </select>
 
                         </div>
-                        <div className="col-md-12 col-sm-12">
+                        <div className="col-md-6 col-sm-6">
                             <span>Categoria</span>
-                            <select className="form-select form-select-md mb-3"
-                                onChange={(e: any) => setUnidades(e.target.value)}
-                                value={fornecedor}
+                            <select className="form-select form-select-md mb-3" id="categoria"
+                                onChange={(e: any) => setCategoria(e.target.value)}
+                                value={categoria}
                                 aria-label="Large select example">
                                 <option selected>-------</option>
-                                <option value={0}>LANCHE</option>
-                                <option value={3}>BEBIDAS</option>
                             </select>
                         </div>
 
                         {/**/}
-                        
-                        <button type="button"
-                            
-                            className="btn btn-danger col-12">Cadastrar</button>
+
+                        <button type="submit"
+                            className="btn btn-danger col-12">Cadastrar
+                        </button>
                     </div>
                 </div>
             </form>
