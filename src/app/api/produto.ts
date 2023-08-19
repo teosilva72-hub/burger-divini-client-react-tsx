@@ -52,4 +52,14 @@ export default new class Produto{
             return e.response.data;
         }
     }
+
+    async saveFornecedor(data:any){
+        try{
+            const res = await axios.post('https://mateus2731.c34.integrator.host/service/api/estoque/fornecedor/', data, this.bearerToken());
+            return res.data;
+        }catch(e:any){
+            return e.response.data;
+        }
+    }
+    
 }

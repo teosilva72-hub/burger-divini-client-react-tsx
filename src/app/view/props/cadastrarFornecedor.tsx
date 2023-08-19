@@ -2,14 +2,17 @@ import axios from "axios";
 import $ from 'jquery';
 import { useState } from "react";
 import { toast } from 'react-toastify';
-import user from "../../api/user";
+import product from "../../api/produto";
 
 export default function CadastrarUser(props: any) {
-    const [nome, setNome] = useState<any>("");
-    const [sobrenome, setSobrenome] = useState<any>("");
+    const [razaoSocial, setRazaoSocial] = useState<any>("");
     const [email, setEmail] = useState<any>("");
-    const [senha, setSenha] = useState<any>("");
-    const [perfil, setPerfil] = useState<any>("");
+    const [nomeFantasia, setNomeFantasia] = useState<any>("");
+    const [cnpj, setCnpj] = useState<any>("");
+    const [nomeContato, setNomeContato] = useState<any>("");
+    const [telefone, setTelefone] = useState<any>("");
+    const [dataAbertura, setDataAbertura] = useState<any>("");
+    const [inscricaoSocial, setInscricaoSocial] = useState<any>("");
     const [cep, setCep] = useState<any>("");
     const [numero, setNumero] = useState<any>(null);
     const [logradouro, setLogradouro] = useState<any>("");
@@ -18,7 +21,6 @@ export default function CadastrarUser(props: any) {
     const [bairro, setBairro] = useState<any>("");
     const [pontoReferencia, setPontoReferencia] = useState<any>("");
     const [complemento, setComplemento] = useState<any>("");
-    const [telefone, setTelefone] = useState<any>("");
 
     const cadastrar = async (value: any) => {
         if (value) $('#rowCadastrarFornecedor').removeClass('d-none');
@@ -65,15 +67,16 @@ export default function CadastrarUser(props: any) {
         }
     }
 
-    const saveUser = async () => {
+    const saveFornecedor = async () => {
         try {
             const data = {
-                name: nome,
-                last_name: sobrenome,
+                razao_social: razaoSocial,
+                nome_fantasia: nomeFantasia,
                 email: email,
-                password: senha,
-                perfil: Number(perfil),
-                celular: telefone,
+                telefone: telefone,
+                cnpj: cnpj,
+                nome_contato: nomeContato,
+                data_abertura: dataAbertura,
                 endereco: {
                     cep: cep,
                     numero: numero,
@@ -84,7 +87,7 @@ export default function CadastrarUser(props: any) {
                     cidade: `${$('#cidade').val()}`
                 }
             }
-            const result: any = await user.registerUser(data);
+            const result: any = await product.saveFornecedor(data);
             if (result.status) {
                 toast.success(`${result.message}`, {
                     className: 'toast-danger',
@@ -104,26 +107,14 @@ export default function CadastrarUser(props: any) {
     const setForm = async () => {
         let checked: any = document.getElementById('checkEndereco');
         let checkedRegister: any = document.getElementById('checkCadastrar');
-        if (nome.trim() == '') {
+        if (razaoSocial.trim() == '') {
             toast.error(`Nome não pode ser igual a vazio!`, {
                 className: 'toast-danger',
                 theme: 'colored',
                 position: 'top-center',
             });
-        } else if (email.trim() == '') {
+        } else if (cnpj.trim() == '') {
             toast.error(`Email não pode ser igual a vazio!`, {
-                className: 'toast-danger',
-                theme: 'colored',
-                position: 'top-center',
-            });
-        } else if (senha.trim() == '' || senha != $('#repeatPassword').val()) {
-            toast.error(`Verifique se as senhas foram digitadas corretamente!`, {
-                className: 'toast-danger',
-                theme: 'colored',
-                position: 'top-center',
-            });
-        } else if (perfil == '') {
-            toast.error(`Perfil não pode ser igual a vazio!`, {
                 className: 'toast-danger',
                 theme: 'colored',
                 position: 'top-center',
@@ -145,7 +136,7 @@ export default function CadastrarUser(props: any) {
                 try {
                     const cepApi: any = await viacep(cep);
                     if (cepApi.request.status == 200) {
-                        await saveUser();
+                        await saveFornecedor();
                         checked.checked = false;
                         checkedRegister.checked = false;
                         await endereco(false);
@@ -161,7 +152,7 @@ export default function CadastrarUser(props: any) {
                 }
 
             }
-        }else await saveUser();
+        }else await saveFornecedor();
 
 
     }
@@ -183,22 +174,22 @@ export default function CadastrarUser(props: any) {
                         <div className="col-md-6 col-sm-12">
                             <span>Razao Social</span>
                             <input type="text"
-                                onChange={(e: any) => setNome(e.target.value)}
-                                value={nome}
+                                onChange={(e: any) => setRazaoSocial(e.target.value)}
+                                value={razaoSocial}
                                 className="form-control mb-2" />
                         </div>
                         <div className="col-md-6 col-sm-12">
                             <span>Nome Fantasia</span>
                             <input type="text"
-                                onChange={(e: any) => setSobrenome(e.target.value)}
-                                value={sobrenome}
+                                onChange={(e: any) => setNomeFantasia(e.target.value)}
+                                value={nomeFantasia}
                                 className="form-control mb-2" />
                         </div>
                         <div className="col-md-6 col-sm-6">
                             <span>CNPJ</span>
                             <input type="text"
-                                onChange={(e: any) => setEmail(e.target.value)}
-                                value={email}
+                                onChange={(e: any) => setCnpj(e.target.value)}
+                                value={cnpj}
                                 className="form-control mb-2" />
                         </div>
                         <div className="col-md-6 col-sm-6">
@@ -208,16 +199,25 @@ export default function CadastrarUser(props: any) {
                                 value={telefone}
                                 className="form-control mb-2" />
                         </div>
-                        <div className="col-md-6 col-sm-12">
-                            <span>Nome Contato</span>
-                            <input type="text"
-                                onChange={(e: any) => setSenha(e.target.value)}
-                                value={senha}
+                        <div className="col-md-6 col-sm-6">
+                            <span>Data Abertura</span>
+                            <input type="date"
+                                onChange={(e: any) => setDataAbertura(e.target.value)}
+                                value={dataAbertura}
                                 className="form-control mb-2" />
                         </div>
                         <div className="col-md-6 col-sm-12">
+                            <span>Nome Contato</span>
+                            <input type="text"
+                                onChange={(e: any) => setNomeContato(e.target.value)}
+                                value={nomeContato}
+                                className="form-control mb-2" />
+                        </div>
+                        <div className="col-md-12 col-sm-12">
                             <span>Email</span>
                             <input type="email"
+                                onChange={(e: any) => setEmail(e.target.value)}
+                                value={email}
                                 className="form-control mb-3" />
                         </div>
                         <div className="col-6 mb-3">{/*CHECK BOX ENDERECO*/}

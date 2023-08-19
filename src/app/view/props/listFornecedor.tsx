@@ -2,6 +2,7 @@ import $ from 'jquery';
 import user from '../../api/user';
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
+import produto from '../../api/produto';
 
 export default function ListFornecedor(props: any) {
 
@@ -10,7 +11,7 @@ export default function ListFornecedor(props: any) {
     const listar = async (value: any) => {
         if (value) {
             $('#tabelaListarFornecedor').removeClass('d-none');
-            await listUser();
+            await listFornecedor();
         } else {
             $('#tabelaListarFornecedor').addClass('d-none');
             $('.columnData').remove()
@@ -18,17 +19,17 @@ export default function ListFornecedor(props: any) {
     }
 
     const editUser = async(id: any) => {
-        alert("A FUNCÇÃO DE EDITAR USUÁRIO AINDA NÃO ESTÁ DISPONIVEL!!!");
+        alert("A FUNCÇÃO DE EDITAR fornecedor AINDA NÃO ESTÁ DISPONIVEL!!!");
 
     }
     const deleteUser = async(id:any) => {
-        alert("A FUNCÇÃO DE DELETAR USUÁRIO AINDA NÃO ESTÁ DISPONIVEL!!!");
+        alert("A FUNCÇÃO DE DELETAR fornecedor AINDA NÃO ESTÁ DISPONIVEL!!!");
     }
 
-    const listUser = async () => {
+    const listFornecedor = async () => {
 
         try {
-            const result = await user.listUser();
+            const result = await produto.getFornecedor();
             if (result.status) {
                 toast.success(`${result.message}`, {
                     className: 'toast-danger',
@@ -76,8 +77,8 @@ export default function ListFornecedor(props: any) {
                                         <>
                                             <tr key={id}>
                                                 <th scope="row">{e.id}</th>
-                                                <td>{e.name}</td>
-                                                <td>{e.celular}</td>
+                                                <td>{e.nome_fantasia}</td>
+                                                <td>{e.telefone}</td>
                                                 <td>
                                                     <div className="btn-group" role="group" aria-label="Basic example">
                                                         <button type="button" className="btn btn-primary" onClick={(a)=>editUser(e.id)}><i className="bi bi-pencil-fill"></i></button>
