@@ -50,7 +50,6 @@ export default function Cadastrar(props: any) {
             };
 
             const result: any = await produto.saveProduto(data);
-            //console.log(result)
             if (result.status) {
                 toast.success(`${result.message}`, {
                     className: 'toast-danger',

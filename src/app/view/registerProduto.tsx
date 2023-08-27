@@ -15,18 +15,18 @@ export default function RegisterProduto(props: any) {
             <NavBar />
             <main id="main">
                 <div className="container-fluid">
-                    <div className="card">
+                    <div className="card bg-secondary">
                         <div className="card-body">
                             <h1 className="card-title text-center">ESTOQUE</h1><hr />
                             <div className="row">
                                 <div className="col-md-6 col-sm-12 mb-3">
-                                    <div className="card mb-3" id="cadastrar">{/**LADO ESQUERDO */}
+                                    <div className="card mb-3 bg-danger" id="cadastrar">{/**LADO ESQUERDO */}
                                         <Cadastrar />
                                     </div>
-                                    <div className="card mb-3" id="cadastrar">{/**LADO ESQUERDO */}
+                                    <div className="card mb-3 bg-dark" id="cadastrar">{/**LADO ESQUERDO */}
                                         <Categoria />
                                     </div>
-                                    <div className="card" id="cadastrar">{/**LADO ESQUERDO */}
+                                    <div className="card mb-3 bg-success" id="cadastrar">{/**LADO ESQUERDO */}
                                         <Fornecedor />
                                     </div>
                                 </div>

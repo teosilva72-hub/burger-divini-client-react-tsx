@@ -1,8 +1,31 @@
 import Chart from "react-google-charts";
 import { screen } from '@testing-library/react';
-
+import { useState } from "react";
 
 export default function ChartVendas(props: any) {
+    const [data, setData] = useState<any>([
+        ['MÊS', 'Entrada', 'Saida'],
+        ["01", 5950, 2200],
+        ["02", 2100, 4800],
+        ["03", 7580, 3980],
+
+    ]);
+    function getDay() {
+        const date = new Date();
+        let days = [];
+        let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        let day: number = lastDay.getDate();
+        console.log(day)
+        for (var i = 1; i <= day; i++) {
+            days.push(i);
+            data.push(`${days}`, 3500, 1520)
+            console.log('valor de x ', i, '\nvalor de lastDay ', lastDay.getDate())
+            if (i == day) break;
+        }
+        setData(days)
+    }
+   //getDay()
+    //console.log(getDay())
 
     return (
         <>
@@ -12,37 +35,7 @@ export default function ChartVendas(props: any) {
                         <h5 className="card-title text-center text-dark">{props.title} {props.icon}</h5><hr />
                         <Chart
                             chartType="Line"
-                            data = {[
-                                ["MÊS", "Vendas", "Saídas"],
-                                ["01", 1000, 400],
-                                ["02", 1170, 460],
-                                ["03", 660, 1120],
-                                ["04", 1030, 540],
-                                ["05", 1030, 540],
-                                ["06", 1030, 540],
-                                ["07", 1030, 540],
-                                ["08", 1030, 540],
-                                ["09", 1030, 540],
-                                ["10", 1030, 540],
-                                ["11", 1030, 540],
-                                ["12", 1030, 540],
-                                ["13", 1030, 540],
-                                ["14", 1030, 540],
-                                ["15", 1030, 540],
-                                ["16", 1030, 540],
-                                ["17", 1030, 540],
-                                ["18", 1030, 540],
-                                ["19", 1030, 540],
-                                ["20", 1030, 540],
-                                ["21", 1030, 540],
-                                ["22", 1030, 540],
-                                ["23", 1030, 540],
-                                ["24", 1030, 540],
-                                ["25", 1030, 540],
-                                ["26", 1030, 540],
-                                ["27", 1030, 540],
-                                ["28", 1030, 540],
-                              ]}
+                            data= {data}
                             width="100%"
                             height="200px"
                             legendToggle

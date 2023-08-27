@@ -30,7 +30,6 @@ export default function Categoria(props: any) {
             };
 
             const result: any = await produto.saveCategoria(data);
-            //console.log(result)
             if (result.status) {
                 toast.success(`${result.message}`, {
                     className: 'toast-danger',

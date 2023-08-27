@@ -1,12 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import '../assets/css/index.css';
-import Footer from "./props/footer";
 import NavBar from "./props/navbar";
 import WidgetOne from "./props/widgetOne";
 import { Chart } from "react-google-charts";
+import apiUser from "../api/user";
+import apiProduto from '../api/produto';
+import { toast } from "react-toastify";
+import $ from 'jquery';
 import ChartVendas from "./props/chartVendas";
 
 export default function Index() {
+
+    const [user, setUser] = useState<any>();
+    const [produto, setProduto] = useState<any>();
+    const [fornecedor, setFornecedor] = useState<any>();
+    const [categoria, setCategoria] = useState<any>();
+
+    const getDataCard = async () => {
+        try {
+            const reqUser = await apiUser.listUser();
+            const reqProduto = await apiProduto.getProdutos();
+            const reqFornecedor = await apiProduto.getFornecedor();
+            const reqCategoria = await apiProduto.getCategoria();
+            setUser(reqUser);
+            setProduto(reqProduto);
+            setFornecedor(reqFornecedor);
+            setCategoria(reqCategoria);
+            if (user.status) {
+
+            } else throw `${user.message}`
+        } catch (e: any) {
+            return false
+        }
+    }
+    getDataCard();
 
     return (
         <>
@@ -15,38 +42,39 @@ export default function Index() {
                 <div className="container-fluid">
                     <article id="menu-header">
                         <div className="row">
-                            <div className="col-6">
-                                <div className="row" >
-                                    <WidgetOne total={10} title="Usuários" tipo={'usuario'}
+                            <h3 className="text-center">OFFICE</h3><hr />
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="row" onClick={getDataCard}>
+                                    <WidgetOne total={user?.data?.length} title="Usuários" tipo={'usuario'}
                                         btnDanger={<i className="bi bi-three-dots"></i>}
                                         btnCriar={<i className="bi bi-person-fill-add"></i>} icon={<i className="bi bi-people-fill"></i>}
                                     />
-                                    <WidgetOne total={10} title="Produtos" tipo={'produto'}
+                                    <WidgetOne total={produto?.data?.length} title="Produtos" tipo={'produtos'}
                                         btnDanger={<i className="bi bi-three-dots"></i>}
                                         icon={<i className="bi bi-box"></i>}
                                         btnCriar={<i className="bi bi-align-middle"></i>}
                                     />
-                                    <WidgetOne total={10} title="Fornecedor" tipo={'fornecedor'}
+                                    <WidgetOne total={fornecedor?.data?.length} title="Fornecedor" tipo={'fornecedor'}
                                         btnDanger={<i className="bi bi-three-dots"></i>}
                                         icon={<i className="bi bi-truck"></i>}
                                         btnCriar={<i className="bi bi-align-middle"></i>}
                                     />
-                                    <WidgetOne total={10} title="Categória" tipo={'categoria'}
+                                    <WidgetOne total={categoria?.data?.length} title="Categória" tipo={'categoria'}
                                         btnDanger={<i className="bi bi-three-dots"></i>}
                                         icon={<i className="bi bi-truck"></i>}
                                         btnCriar={<i className="bi bi-align-middle"></i>}
                                     />
                                 </div>
                             </div>
-                            <div className="col-6">
-teste
+                            <div className="col-lg-6 col-md-6 col-sm-12">
+                                <div className="row">
+                                    <ChartVendas />
+                                </div>
                             </div>
                         </div>
                     </article>
                     <article id="graficoVendas">
-                        <div className="row">
 
-                        </div>
                     </article>
                 </div>
             </section>

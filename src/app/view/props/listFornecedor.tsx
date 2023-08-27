@@ -36,7 +36,6 @@ export default function ListFornecedor(props: any) {
                     theme: 'colored',
                     position: 'top-center',
                 });
-                console.log(result)
                 await setRes(result.data as any);
                 return result.data
             } else throw result.message;
@@ -51,7 +50,7 @@ export default function ListFornecedor(props: any) {
 
     return (
         <>
-            <div className="card" id="listar">
+            <div className="card bg-success" id="listar">
                 <div className="card-body">
                     <h5 className="card-title text-center">LISTA FORNECEDOR</h5><hr />
                     <div className="form-check">
@@ -72,7 +71,6 @@ export default function ListFornecedor(props: any) {
                         <tbody id='addTbody'>
                             {
                                 res?.map((e: any, id: number) => {
-                                    console.log(e)
                                     return (
                                         <>
                                             <tr key={id}>

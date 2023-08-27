@@ -35,7 +35,6 @@ export default function ListUser(props: any) {
                     theme: 'colored',
                     position: 'top-center',
                 });
-                console.log(result)
                 await setRes(result.data as any);
                 return result.data
             } else throw result.message;
@@ -51,7 +50,7 @@ export default function ListUser(props: any) {
     return (
         <>
             <div className="card" id="listar">
-                <div className="card-body">
+                <div className="card-body bg-dark">
                     <h5 className="card-title text-center">LISTA</h5><hr />
                     <div className="form-check">
                         <input className="form-check-input" type="checkbox" value="" id="checkCadastrar" onClick={(e: any) => { listar(e.target.checked) }} />
@@ -71,7 +70,6 @@ export default function ListUser(props: any) {
                         <tbody id='addTbody'>
                             {
                                 res?.map((e: any, id: number) => {
-                                    console.log(e)
                                     return (
                                         <>
                                             <tr key={id}>

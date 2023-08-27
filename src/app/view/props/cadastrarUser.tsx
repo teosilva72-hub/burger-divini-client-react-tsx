@@ -20,10 +20,13 @@ export default function CadastrarUser(props: any) {
     const [complemento, setComplemento] = useState<any>("");
     const [telefone, setTelefone] = useState<any>("");
 
-    const cadastrar = async (value: any) => {
-        if (value) $('#rowCadastrar').removeClass('d-none');
-        else $('#rowCadastrar').addClass('d-none');
+    const cadastrar = async (value: boolean ) => {
+        if (value) {
+            $('#rowCadastrar').removeClass('d-none');
+            $('#checkCadastrar').prop('checked', true);
+        }else $('#rowCadastrar').addClass('d-none');
     }
+    cadastrar(true);
 
     const endereco = (value: any) => {
         if (value) $('#endereco').removeClass('d-none');
@@ -168,7 +171,7 @@ export default function CadastrarUser(props: any) {
     return (
         <>
             <form>
-                <div className="card-body">
+                <div className="card-body bg-dark">
                     <h5 className="card-title text-center">CADASTRAR</h5><hr />
                     <div className="form-check">
                         <input className="form-check-input"
@@ -179,6 +182,7 @@ export default function CadastrarUser(props: any) {
                             Cadastrar Usuário
                         </label>
                     </div>
+                    <hr />
                     <div className="row d-none" id="rowCadastrar">
                         <div className="col-md-6 col-sm-12">
                             <span>Nome</span>
