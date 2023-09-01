@@ -17,9 +17,13 @@ export default function ListUser(props: any) {
         }
     }
 
+    const validId = async(id:number)=>{
+        if(id == undefined || id == null) throw 'id inválido!';
+        return true;
+    }
     const editUser = async(id: any) => {
-        alert("A FUNCÇÃO DE EDITAR USUÁRIO AINDA NÃO ESTÁ DISPONIVEL!!!");
-
+       await validId(id);
+       console.log(id)
     }
     const deleteUser = async(id:any) => {
         alert("A FUNCÇÃO DE DELETAR USUÁRIO AINDA NÃO ESTÁ DISPONIVEL!!!");
