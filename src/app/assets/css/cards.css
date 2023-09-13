@@ -1,0 +1,28 @@
+.card-color-red {
+    background-color: rgb(179, 51, 51)!important;
+}
+.card-color-gray {
+    background-color: rgba(255, 255, 255, 0.719) !important;
+}
+.card-title-blue {
+    color: #143d59  !important;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.card-color-gold {
+    background: #f4b41a !important;
+    color: #143d59 !important;
+    font-weight: 300 !important;
+
+}
+
+.card-color-blue {
+    background: #143d59 !important;
+}
+
+.hover-blue:hover {
+    background: #104c91 !important;
+}
+
+.card-title-white{
+    color: white !important;
+}

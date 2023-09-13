@@ -38,41 +38,54 @@ export default function Index() {
     return (
         <>
             <NavBar />
-            <section id="widgetOne">
+            <section className="card-color-blue" id="widgetOne">
                 <div className="container-fluid">
-                    <article id="menu-header">
-                        <div className="row">
-                            <h3 className="text-center">OFFICE</h3><hr />
-                            <div className="col-lg-6 col-md-6 col-sm-12">
-                                <div className="row" onClick={getDataCard}>
-                                    <WidgetOne total={user?.data?.length} title="Usuários" tipo={'usuario'}
-                                        btnDanger={<i className="bi bi-three-dots"></i>}
-                                        btnCriar={<i className="bi bi-person-fill-add"></i>} icon={<i className="bi bi-people-fill"></i>}
-                                    />
-                                    <WidgetOne total={produto?.data?.length} title="Produtos" tipo={'produtos'}
-                                        btnDanger={<i className="bi bi-three-dots"></i>}
-                                        icon={<i className="bi bi-box"></i>}
-                                        btnCriar={<i className="bi bi-align-middle"></i>}
-                                    />
-                                    <WidgetOne total={fornecedor?.data?.length} title="Fornecedor" tipo={'fornecedor'}
-                                        btnDanger={<i className="bi bi-three-dots"></i>}
-                                        icon={<i className="bi bi-truck"></i>}
-                                        btnCriar={<i className="bi bi-align-middle"></i>}
-                                    />
-                                    <WidgetOne total={categoria?.data?.length} title="Categória" tipo={'categoria'}
-                                        btnDanger={<i className="bi bi-three-dots"></i>}
-                                        icon={<i className="bi bi-truck"></i>}
-                                        btnCriar={<i className="bi bi-align-middle"></i>}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-lg-6 col-md-6 col-sm-12">
+                    <div className="card position">
+                        <div className="card-body">
+                            <article id="menu-header">
                                 <div className="row">
-                                    <ChartVendas />
+                                    <h3 className="text-center">OFFICE</h3><hr />
+                                    <div className="col-lg-6 col-md-6 col-sm-12">
+                                        <div className="row" onClick={getDataCard}>
+                                            <WidgetOne total={user?.data?.length} title="Usuários" tipo={'usuario'}
+                                                btnDanger={<i className="bi bi-three-dots"></i>}
+                                                btnCriar={<i className="bi bi-person-fill-add"></i>} icon={<i className="bi bi-people-fill"></i>}
+                                                colorCard={"card-color-blue"}
+                                                titlecolorwhite={"card-title-white"}
+                                            />
+                                            <WidgetOne total={produto?.data?.length} title="Produtos" tipo={'produtos'}
+                                                btnDanger={<i className="bi bi-three-dots"></i>}
+                                                icon={<i className="bi bi-box"></i>}
+                                                btnCriar={<i className="bi bi-align-middle"></i>}
+                                                colorCard={"card-color-blue"}
+                                                titlecolorwhite={"card-title-white"}
+                                            />
+                                            <WidgetOne total={fornecedor?.data?.length} title="Fornecedor" tipo={'fornecedor'}
+                                                btnDanger={<i className="bi bi-three-dots"></i>}
+                                                icon={<i className="bi bi-truck"></i>}
+                                                btnCriar={<i className="bi bi-align-middle"></i>}
+                                                colorCard={"card-color-blue"}
+                                                titlecolorwhite={"card-title-white"}
+                                            />
+                                            <WidgetOne total={categoria?.data?.length} title="Categória" tipo={'categoria'}
+                                                btnDanger={<i className="bi bi-three-dots"></i>}
+                                                icon={<i className="bi bi-truck"></i>}
+                                                btnCriar={<i className="bi bi-align-middle"></i>}
+                                                colorCard={"card-color-blue"}
+                                                titlecolorwhite={"card-title-white"}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-6 col-md-6 col-sm-12">
+                                        <div className="row">
+                                            <ChartVendas />
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </article>
                         </div>
-                    </article>
+                    </div>
+
                     <article id="graficoVendas">
 
                     </article>

@@ -50,8 +50,8 @@ export default function ListProd(props: any) {
 
     return (
         <>
-            <div className="card" id="listar">
-                <div className="card-body bg-danger">
+            <div className="card card-color-blue" id="listar">
+                <div className="card-body">
                     <h5 className="card-title text-center">LISTA PRODUTOS</h5><hr />
                     <div className="form-check">
                         <input className="form-check-input" type="checkbox" value="" id="checkCadastrar" onClick={(e: any) => { listar(e.target.checked) }} />

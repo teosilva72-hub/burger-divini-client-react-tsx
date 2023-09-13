@@ -50,7 +50,7 @@ export default function ListFornecedor(props: any) {
 
     return (
         <>
-            <div className="card bg-success" id="listar">
+            <div className="card card-color-blue hover-blue" id="listar">
                 <div className="card-body">
                     <h5 className="card-title text-center">LISTA FORNECEDOR</h5><hr />
                     <div className="form-check">

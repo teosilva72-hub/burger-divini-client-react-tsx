@@ -14,14 +14,14 @@ export default function WidgetOne(props: any) {
         <>
             
             <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
-                <div className="card" onClick={(e:any)=>moreOption((props.tipo))}>
+                <div className={`card ${props.colorCard}`} onClick={(e:any)=>moreOption((props.tipo))}>
                     <div className={`card-body`}>
-                        <h5 className="card-title text-center">{props.title} {props.icon}</h5>
+                        <h5 className={`card-title text-center ${props.titlecolorwhite}`}>{props.title} {props.icon}</h5>
                         <h6 className="card-subtitle text-body-secondary">{props.subTitle}</h6><hr />
                         <div className="row">
                             <div className="col-12">
                                 <div className="card">
-                                    <div className={`card-body`}>
+                                    <div className={`card-body card-color-gold`}>
                                     <h6 className="card-subtitle text-center text-body-secondary"><b>Total: {props.total}</b></h6>
                                     </div>
                                 </div>

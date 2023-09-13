@@ -47,7 +47,7 @@ export default function ListCategoria(props: any) {
 
     return (
         <>
-            <div className="card bg-dark" id="listar">
+            <div className="card card-color-gold" id="listar">
                 <div className="card-body">
                     <h5 className="card-title text-center">LISTA CATEGORIA</h5><hr />
                     <div className="form-check">

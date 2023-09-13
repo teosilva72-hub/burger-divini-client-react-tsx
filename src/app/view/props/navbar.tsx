@@ -4,7 +4,7 @@ export default function NavBar(props:any) {
 
 
     return (
-        <><nav className="navbar bg-dark border-bottom border-body fixed-top" data-bs-theme="dark">
+        <><nav className="navbar card-color-blue border-bottom border-body fixed-top" data-bs-theme="dark">
             <ul className="nav">
                 <li className="nav-item">
                     <a className="nav-link active" href="#/index"><i className="bi bi-house-door"></i> Início</a>
