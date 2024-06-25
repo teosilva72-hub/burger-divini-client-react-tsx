@@ -1,3 +1,19 @@
 {
-    "empresa": ""
+    "empresa": "Burger Divini",
+    "contato": {
+        "telefone": "+55 11 98280-0140",
+        "whatsapp": "https://wa.me/5511982800140"
+    },
+    "integrator": {
+        "anotaAi": "https://app.anota.ai/m/XB6_BVnrw"
+    },
+    "menu": {
+        "home": "Página inicial"
+    },
+    "modal":{
+        "close": "Fechar"
+    },
+    "frases":{
+        "welcome": "Bem Vind@!"
+    }
 }

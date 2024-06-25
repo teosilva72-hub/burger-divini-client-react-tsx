@@ -1,15 +1,29 @@
 import locale from '../../assets/locale/Pt_BR.json';
 import '../../assets/css/index.css'
+import anotaAi from '../../assets/img/anotaai.png'
 
 export default function Menu01(props: any) {
+    const linkWpp = () => {
+        window.open(locale.contato.whatsapp, '_blank');
+    }
 
+    const linkAnotaAi = () => {
+        window.open(locale.integrator.anotaAi, '_blank');
+
+    }
 
     return (
         <>
             <nav className="navbar navbar-dark bg-dark fixed-top">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="#">{locale.empresa}</a>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                    <a href="#" onClick={linkAnotaAi}>
+                        <img src={anotaAi} style={{ width: '40px' }} />
+                    </a>
+                    <a href='#' id='linkWpp' onClick={linkWpp}>
+                        <i className="bi bi-whatsapp" style={{ fontSize: "20pt", color: "green" }}></i>
+                    </a>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" disabled={true} data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="offcanvas offcanvas-end text-bg-dark" tabIndex={-1} id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
@@ -20,12 +34,12 @@ export default function Menu01(props: any) {
                         <div className="offcanvas-body">
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="#">Home</a>
+                                    <a className="nav-link active" aria-current="page" href="#">{locale.menu.home}</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Link</a>
+                                    <a className="nav-link" href="#">Cardápio</a>
                                 </li>
-                                
+
                             </ul>
                             <form className="d-flex mt-3" role="search">
                                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />

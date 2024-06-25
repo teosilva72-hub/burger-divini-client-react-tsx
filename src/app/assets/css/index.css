@@ -5,8 +5,9 @@ html, body{
     padding: 0;
 }
 
-#widgetOne{
-    width: 100%;
+.content{
     position: relative;
-    top: 90px;
+    margin-top: 50px;
+    width: 100%;
+    height: 100%;
 }
